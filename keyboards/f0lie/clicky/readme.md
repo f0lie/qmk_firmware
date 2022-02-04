@@ -1,28 +1,27 @@
 # f0lie's custom keyboard
 
 * Keyboard Maintainer: [f0lie](https://github.com/f0lie)
-* Hardware Supported: atmega32u4, Arduino Leonardo
+* Hardware Supported: atmega32u4, Arduino Micro
 * Hardware Availability: Handwired thingy
 
-Copy and paste this code to flash the Leonardo. It's a pain in the ass to flash.
+This is a handwired keyboard that uses Matias Clicky switches. It is indeed very clicky and nice.
 
-stty -F /dev/ttyACM0 ispeed 1200 ospeed 1200 && avrdude -C/etc/avrdude.conf -patmega32u4 -cavr109 -v -v -v -v -P/dev/ttyACM0 -b57600 -D -Uflash:w:f0lie_quiet_default.hex:i
+Clicky keyboard is largely the same thing as my other keyboard, quiet. I'll note the differences here.
+
+## Flashing
+
+Copy and paste this code to flash the Micro. It's a pain in the ass to flash. It's the same problem with Leonardo or maybe it's because I am using a cheap clone?
+
+stty -F /dev/ttyACM0 ispeed 1200 ospeed 1200 && avrdude -C/etc/avrdude.conf -patmega32u4 -cavr109 -v -v -v -v -P/dev/ttyACM0 -b57600 -D -Uflash:w:f0lie_clicky_default.hex:i
+
+## Switch
+
+The switches here are Matias Clicky switches. These are very clicky and nice switches which is why I named the keyboard, Clicky.
 
 ## Bootloader
 
-For Leonardo, the software goes into bootload every time it boots. Thus entering the bootloader just means unplugging and plugging the keyboard. There is also the reset button on the board itself.
+Unlike the Leonardo, the Arduino Micro goes straight into code instead of the bootloader. The only way to flash the bootloader is to click the reset button.
 
-There are ways to completely remove the bootloader by using ICSP programming. But those pins were removed on my board to fit the case. Also, needing to pull out another thing to flash my board is a pain in the butt.
+## Wiring
 
-## Wiring notes
-For handwired keyboards, the layout of the wires is stored in `custom.h`'s 2d array. That macro translates the row and col coordinates that QMK finds into keycodes that are sent to the computer. To configure the array, set the values so that keys correspond to a 2D array and set KC_NO for coordinates where no key exists.
-
-Some people do creative things with wiring like extending a wiring column to connect two physical columns like in `handwired/xealousbrown`.
-
-## udev
-It turns out those rules are quite important. By default, Linux doesn't allow flashing of devices or reading from the debugging console of QMK. `qmk doctor` suggests copying the udev from the repo into the system. It was needed to stop my board from not running at all. (At least I think so?)
-
-I also added my board in the udev so I can read from the debugging console. 
-
-## keymap
-The default keymap is similar to a Happy Hacker Keyboard 2. That's the keyboard I use the most often and I like the layout. The layout fits the ANSI 60% perfectly without the need for odd layouts or custom keycaps. My keyboard is regular full sized keyboard but everything but the 60% ANSI was cut out. So I can't rely on custom loadouts to get arrow keys.
+The wiring layout is actually the same as my quiet keyboard. The only difference is changing out what PINs QMK uses to read from. This is because instead of a Leonardo, I am using a Micro which rearranges the pins.

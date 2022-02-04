@@ -4,6 +4,10 @@
 * Hardware Supported: atmega32u4, Arduino Leonardo
 * Hardware Availability: Handwired thingy
 
+This is a handwired keyboard that uses Matias Quiet switches. They are indeed quiet and as loud as membrane switches. I can use it during calls without anyone noticing.
+
+## Flashing
+
 Copy and paste this code to flash the Leonardo. It's a pain in the ass to flash.
 
 stty -F /dev/ttyACM0 ispeed 1200 ospeed 1200 && avrdude -C/etc/avrdude.conf -patmega32u4 -cavr109 -v -v -v -v -P/dev/ttyACM0 -b57600 -D -Uflash:w:f0lie_quiet_default.hex:i
